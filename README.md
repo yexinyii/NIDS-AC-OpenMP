@@ -27,12 +27,5 @@ NIDS-AC-OpenMP/
 │   ├── pcap_raw/              # 少量CIC-IDS2017原始pcap
 │   ├── http_extracted/        # 预处理完成HTTP文本
 │   └── test_sample.txt        # 简易测试样本
-├── performance_data/          # 极简性能记录（大幅精简，不做深度分析）
-│   └── speedup_record.txt     # 并行加速比基础记录
-├── test/                      # 算法+系统功能测试
-│   ├── algorithm_test.cpp     # 串行/并行算法测试
-│   └── system_function_test.cpp # 系统业务功能测试
-├── log/                       # 系统检测告警日志（系统核心功能）
-├── build/                     # 编译缓存（git忽略，不上传）
-└── demo_img/                  # 系统运行截图、后期Qt界面效果图
+
 ```
