@@ -1,6 +1,6 @@
 NIDS\-AC\-OpenMP 最终仓库文件结构（适配CIC\-IDS2017）
 
-# 一、最终固定目录结构（直接照这个建，不要乱改）
+# 一、最终固定目录结构
 
 ```plain
 NIDS-AC-OpenMP/
