@@ -8,16 +8,16 @@ NIDS-AC-OpenMP/
 ├── CMakeLists.txt             # 编译配置（内置OpenMP+Eigen+Qt依赖预留）
 ├── README.md                  # 项目说明（突出并行AC+系统实现+可视化预留）
 ├── third_party/               # 第三方库（纯净不用安装）
-│   └── Eigen/                 # Eigen轻量辅助计算（极简使用）
+│   └── Eigen/                 # Eigen轻量辅助计算
 ├── src/                       # 核心源代码（系统+算法为绝对重心）
 │   ├── ac_automaton.cpp/h     # 串行AC自动机基础实现
 │   ├── parallel_ac.cpp/h      # 【核心重点】OpenMP并行AC优化
-│   ├── system_core.cpp/h      # 【新增】系统业务核心调度模块
+│   ├── system_core.cpp/h      # 系统业务核心调度模块
 │   ├── eigen_simple.cpp/h     # Eigen极简辅助计算（弱化数据分析）
 │   ├── file_io.cpp/h          # 轻量化文件读写、规则/数据加载
 │   ├── tools.cpp/h            # 计时工具、基础数据统计
 │   └── main.cpp               # 控制台程序入口
-├── ui_qt/                     # 【新增预留】Qt可视化界面模块（后期开发）
+├── ui_qt/                     # Qt可视化界面模块
 │   ├── qt_mainwindow.ui
 │   ├── qt_ui.cpp/h
 │   └── ui_resource/           # 界面图标、样式资源
