@@ -1,168 +1,38 @@
-NIDS-AC-OpenMP最终仓库⽂件结构（适配
-CIC-IDS2017）
-⼀、最终固定⽬录结构（直接照这个建，不要乱改）
-1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-25
-26
-27
-28
-代码块
-NIDS-AC-OpenMP/ 
-├── .gitignore                 
-├── CMakeLists.txt             
-├── README.md                  
-├── third_party/               
-│   └── Eigen/                 
-├── src/                       
-│   ├── ac_automaton.cpp/h     
-│   ├── parallel_ac.cpp/h      
-│   ├── eigen_math.cpp/h       
-│   ├── file_io.cpp/h          
-│   ├── tools.cpp/h            
-│   └── main.cpp               
-├── rules/                     
-│   └── attack_rules.txt       
-├── dataset/                   
-│   ├── pcap_raw/              
-│   ├── http_extracted/        
-│   └── benchmark_large.txt    
-├── performance_data/          
-│   ├── speedup_log.txt        
-│   └── time_matrix.csv        
-├── test/                      
-# Git
-忽略编译⽂件、缓存、临时数据
- 
-# 
-编译配置（内置
-OpenMP+Eigen
-依赖）
- 
-# 
-项⽬说明（突出并⾏算法
-+
-矩阵统计）
- 
-# 
-【新增】第三⽅库（纯净不⽤安装）
- 
-# Eigen
-线性代数库（头⽂件模式，零配置）
- 
-# 
-核⼼源代码（算法绝对重⼼）
- 
-# 
-串⾏
-AC
-⾃动机基础实现
- 
-# 
-【核⼼重点】
-OpenMP
-并⾏
-AC
-优化
- 
-# 
-【新增】
-Eigen
-性能矩阵计算
- 
-# 
-⾼精度计时、加速⽐计算
- 
-# 
-轻量化⽂件读取（不深究数据处理）
- 
-# 
-程序⼊⼝、串⾏
-/
-并⾏对⽐测试
- 
-# 
-攻击特征规则库
- 
-# 
-检测特征词库
- 
-# 
-测试数据集（仅算法压测载体）
- 
-# 
-少量
-CIC-IDS2017
-原始
-pcap
-（保留专业性）
- 
-# 
-预处理完成
-HTTP
-⽂本（直接使⽤）
- 
-# 
-超⼤批量压测数据集
- 
-# 
-【新增】算法性能统计⽂件夹
- 
-# 
-加速⽐原始⽇志
- 
-# Eigen
-⽣成耗时矩阵数据表
- 
-# 
-算法专项测试
- 
-│   ├── serial_test.cpp        
-│   └── parallel_test.cpp      
-├── log/                       
-├── build/                     
-└── demo_img/                  
-# 
-串⾏
-AC
-性能测试
- 
-# 
-并⾏
-AC
-性能测试
- 
-# 
-检测告警⽇志
- 
-# 
-编译缓存（
-git
-忽略，不上传）
- 
-# 
-性能折线图、矩阵分析截图
- 
+NIDS\-AC\-OpenMP 最终仓库文件结构（适配CIC\-IDS2017）
 
+# 一、最终固定目录结构（直接照这个建，不要乱改）
+
+```plain
+NIDS-AC-OpenMP/
+├── .gitignore                 # Git忽略编译文件、缓存、临时数据
+├── CMakeLists.txt             # 编译配置（内置OpenMP+Eigen+Qt依赖预留）
+├── README.md                  # 项目说明（突出并行AC+系统实现+可视化预留）
+├── third_party/               # 第三方库（纯净不用安装）
+│   └── Eigen/                 # Eigen轻量辅助计算（极简使用）
+├── src/                       # 核心源代码（系统+算法为绝对重心）
+│   ├── ac_automaton.cpp/h     # 串行AC自动机基础实现
+│   ├── parallel_ac.cpp/h      # 【核心重点】OpenMP并行AC优化
+│   ├── system_core.cpp/h      # 【新增】系统业务核心调度模块
+│   ├── eigen_simple.cpp/h     # Eigen极简辅助计算（弱化数据分析）
+│   ├── file_io.cpp/h          # 轻量化文件读写、规则/数据加载
+│   ├── tools.cpp/h            # 计时工具、基础数据统计
+│   └── main.cpp               # 控制台程序入口
+├── ui_qt/                     # 【新增预留】Qt可视化界面模块（后期开发）
+│   ├── qt_mainwindow.ui
+│   ├── qt_ui.cpp/h
+│   └── ui_resource/           # 界面图标、样式资源
+├── rules/                     # 攻击特征规则库
+│   └── attack_rules.txt       # 检测特征词库
+├── dataset/                   # 测试数据集（纯系统测试载体）
+│   ├── pcap_raw/              # 少量CIC-IDS2017原始pcap
+│   ├── http_extracted/        # 预处理完成HTTP文本
+│   └── test_sample.txt        # 简易测试样本
+├── performance_data/          # 极简性能记录（大幅精简，不做深度分析）
+│   └── speedup_record.txt     # 并行加速比基础记录
+├── test/                      # 算法+系统功能测试
+│   ├── algorithm_test.cpp     # 串行/并行算法测试
+│   └── system_function_test.cpp # 系统业务功能测试
+├── log/                       # 系统检测告警日志（系统核心功能）
+├── build/                     # 编译缓存（git忽略，不上传）
+└── demo_img/                  # 系统运行截图、后期Qt界面效果图
+```
