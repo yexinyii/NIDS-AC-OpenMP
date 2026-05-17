@@ -71,6 +71,7 @@ Testing/
 #dataset
 
 dataset/pcap_raw/*
+dataset/http_all.txt
 
 #ai-documents
 ai-documents/
