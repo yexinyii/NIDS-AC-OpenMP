@@ -45,4 +45,4 @@ NIDS-AC-OpenMP/
    https://gitlab.com/libeigen/eigen/-/archive/3.4.0/eigen-3.4.0.zip
 
 2. 解压后将文件夹重命名为 Eigen，并放入项目的 third_party 目录下，结构如下：
-   project/third_party/Eigen/
+   NIDS-AC-OpenMP/third_party/Eigen/
