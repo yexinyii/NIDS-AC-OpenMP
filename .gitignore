@@ -75,3 +75,6 @@ dataset/http_all.txt
 
 #ai-documents
 ai-documents/
+
+# 忽略 Eigen 库源码，让用户自己下载放置
+third_party/Eigen/
