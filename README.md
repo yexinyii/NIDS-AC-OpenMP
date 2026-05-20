@@ -33,7 +33,6 @@ NIDS-AC-OpenMP/
     │   └── http_5.txt
     ├── README.md                 
     └── test_sample.txt           
-
 ```
 # NIDS-AC-OpenMP
 基于AC自动机 + OpenMP + Eigen的并行网络入侵检测系统
