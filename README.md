@@ -53,6 +53,6 @@ NIDS-AC-OpenMP/
 | **Linux (Ubuntu/Debian)** | `sudo apt install libeigen3-dev` |
 | **macOS (Homebrew)** | `brew install eigen` |
 
-> **路径要求**：手动版需保证路径为 `项目/third_party/Eigen/`
+> **路径要求**：手动版需保证路径为 `NADS-AC-OpenMp/third_party/Eigen/`
 plaintext
-项目根目录/third_party/Eigen/
+NDAS-AC-OpenMp/third_party/Eigen/
