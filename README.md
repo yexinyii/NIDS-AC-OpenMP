@@ -54,5 +54,4 @@ NIDS-AC-OpenMP/
 | **macOS (Homebrew)** | `brew install eigen` |
 
 > **路径要求**：手动版需保证路径为 `NADS-AC-OpenMp/third_party/Eigen/`
-plaintext
-NDAS-AC-OpenMp/third_party/Eigen/
+
