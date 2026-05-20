@@ -39,7 +39,6 @@ NIDS-AC-OpenMP/
 4. Eigen 3.4.0
 
 ## Eigen3库安装方式
-# Eigen3 安装配置
 
 本项目依赖 **Eigen 3.4.0** 线性代数库，各系统安装方式如下：
 
@@ -49,6 +48,6 @@ NIDS-AC-OpenMP/
 | **Linux (Ubuntu/Debian)** | `sudo apt install libeigen3-dev` |
 | **macOS (Homebrew)** | `brew install eigen` |
 
-> **路径要求**：本地安装版可自动识别，手动版需保证路径为 `项目/third_party/Eigen/`
+> **路径要求**：手动版需保证路径为 `项目/third_party/Eigen/`
 plaintext
 项目根目录/third_party/Eigen/
