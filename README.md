@@ -22,7 +22,7 @@ NIDS-AC-OpenMP/
 │   ├── qt_ui.cpp/h
 │   └── ui_resource/
 ├── rules/
-│   └── attack_rules.txt          # 攻击特征规则库（AC自动机词典）
+│   └── rules.txt          # 攻击特征规则库（AC自动机词典）
 └── dataset/                      # 使用 CIC-IDS2017 数据集作为测试样例
     ├── pcap_raw/                
     ├── http_extracted/           # 拆分后的 HTTP 流量文本样本
