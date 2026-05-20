@@ -39,14 +39,28 @@ NIDS-AC-OpenMP/
 4. Eigen 3.4.0
 
 ## Eigen3库安装方式
-Windows：
-1. 下载 Eigen 3.4.0：
-   https://gitlab.com/libeigen/eigen/-/archive/3.4.0/eigen-3.4.0.zip
+本项目依赖 Eigen 3.4.0 线性代数库，不同环境安装配置如下：
+🪟 Windows (Visual Studio)
+下载 Eigen 3.4.0：
+https://gitlab.com/libeigen/eigen/-/archive/3.4.0/eigen-3.4.0.zip
+解压并将文件夹重命名为 Eigen
+放置到项目 third_party/ 目录下
+🪟 Windows (MinGW)
+下载 Eigen 3.4.0 并解压
+重命名为 Eigen，放入 third_party/
+CMake 构建时指定 MinGW 编译器即可自动识别
+🐧 Linux / 🧑‍💻 macOS
+bash
+运行
+# Ubuntu / Debian
+sudo apt install libeigen3-dev
 
-2. 解压后将文件夹重命名为 Eigen，并放入项目的 third_party 目录下，结构如下：
-   NIDS-AC-OpenMP/third_party/Eigen/
+# Fedora
+sudo dnf install eigen3-devel
 
-
-类Unix：
-   包管理器安装libeigen3-dev库
-
+# macOS (Homebrew)
+brew install eigen
+📁 库路径要求
+Eigen 必须放置在以下路径，项目才能正常编译：
+plaintext
+项目根目录/third_party/Eigen/
