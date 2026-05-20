@@ -1,10 +1,14 @@
 #include "preprocess.h"
-#include <algorithm>
 #include <cctype>
 
-std::string to_lowercase(const std::string& text) {
+std::string to_lowercase(const std::string& text)
+{
     std::string result = text;
-    std::transform(result.begin(), result.end(), result.begin(),
-        [](unsigned char c) { return std::tolower(c); });
+
+    for (char& c : result)
+    {
+        c = std::tolower(static_cast<unsigned char>(c));
+    }
+
     return result;
 }
