@@ -28,8 +28,8 @@ int main()
         return 1;
     }
 
-    // 构建AC自动机
-    build_ac_automaton(rules);
+    // todo:构建AC自动机
+    //build_ac_automaton(rules);
 
     // HTTP测试文件列表
     std::vector<std::string> filePaths = {
@@ -62,8 +62,8 @@ int main()
             std::string processed =
                 to_lowercase(content);
 
-            // AC自动机匹配检测
-            ac_automaton_match(processed);
+            // todo:AC自动机匹配检测
+            //ac_automaton_match(processed);
         }
         catch (const std::exception &e)
         {

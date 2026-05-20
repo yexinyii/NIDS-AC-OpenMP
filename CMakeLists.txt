@@ -5,6 +5,9 @@ project(NIDS-AC-OpenMP)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+# Qt配置
+find_package(Qt5 REQUIRED COMPONENTS Core Widgets)
+
 # OpenMP
 find_package(OpenMP REQUIRED)
 if(OpenMP_CXX_FOUND)
@@ -27,7 +30,7 @@ set(SOURCES
     ui_qt/qt_ui.cpp
 )
 
-# 所有头文件
+# Qt外的头文件头文件
 set(HEADERS
     src/ac_automaton.h
     src/parallel_ac.h
@@ -35,15 +38,16 @@ set(HEADERS
     src/eigen_simple.h
     src/file_io.h
     src/tools.h
-    src/preprocess.h       
-    ui_qt/qt_ui.h
+    src/preprocess.h
 )
 
-# UI 文件
-qt5_wrap_ui(UI_HEADERS ui_qt/qt_mainwindow.ui)
+#Qt头文件
+set(UI_HEADERS
+    ui_qt/qt_ui.ui
+)
 
 # 生成可执行文件
-add_executable(${PROJECT_NAME} ${SOURCES} ${HEADERS} ${UI_HEADERS})
+add_executable(${PROJECT_NAME} ${SOURCES} ${HEADERS} ${UI_HEADERS} ${UI_HEADERS})
 
 # 链接库
-target_link_libraries(${PROJECT_NAME} PRIVATE OpenMP::OpenMP_CXX)
+target_link_libraries(${PROJECT_NAME} PRIVATE OpenMP::OpenMP_CXX Qt5::Core Qt5::Widgets)
