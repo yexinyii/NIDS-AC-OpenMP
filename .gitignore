@@ -70,7 +70,7 @@ Testing/
 
 #dataset
 
-dataset/pcap_raw/*
+dataset/pcap_raw/Friday-WorkingHours.pcap
 
 
 #ai-documents
