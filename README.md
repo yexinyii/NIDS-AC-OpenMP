@@ -25,7 +25,8 @@ NIDS-AC-OpenMP/
 │   └── attack_rules.txt       
 ├── dataset/ #使用CIC\-IDS2017数据集作为测试样例
 │   ├── pcap_raw/              
-│   ├── http_extracted/        
+│   ├── http_extracted/
+│   ├── README.md     
 │   └── test_sample.txt        
 
 ```
