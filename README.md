@@ -4,30 +4,35 @@ NIDS\-AC\-OpenMP
 
 ```plain
 NIDS-AC-OpenMP/
-├── .gitignore                 
-├── CMakeLists.txt            
-├── README.md                  
-├── third_party/               
-│   └── Eigen/                 
-├── src/                       
-│   ├── ac_automaton.cpp/h     
-│   ├── parallel_ac.cpp/h      
-│   ├── system_core.cpp/h      
-│   ├── eigen_simple.cpp/h     
-│   ├── file_io.cpp/h          
-│   ├── tools.cpp/h            
-│   └── main.cpp               
-├── ui_qt/                     
+├── .gitignore
+├── CMakeLists.txt
+├── README.md
+├── third_party/
+│   └── Eigen/
+├── src/
+│   ├── ac_automaton.cpp/h
+│   ├── parallel_ac.cpp/h
+│   ├── system_core.cpp/h
+│   ├── eigen_simple.cpp/h
+│   ├── file_io.cpp/h
+│   ├── tools.cpp/h
+│   └── main.cpp
+├── ui_qt/
 │   ├── qt_mainwindow.ui
 │   ├── qt_ui.cpp/h
-│   └── ui_resource/          
-├── rules/                     
-│   └── attack_rules.txt       
-├── dataset/ #使用CIC\-IDS2017数据集作为测试样例
-│   ├── pcap_raw/              
-│   ├── http_extracted/
-│   ├── README.md     
-│   └── test_sample.txt        
+│   └── ui_resource/
+├── rules/
+│   └── attack_rules.txt          # 攻击特征规则库（AC自动机词典）
+└── dataset/                      # 使用 CIC-IDS2017 数据集作为测试样例
+    ├── pcap_raw/                
+    ├── http_extracted/           # 拆分后的 HTTP 流量文本样本
+    │   ├── http_1.txt
+    │   ├── http_2.txt
+    │   ├── http_3.txt
+    │   ├── http_4.txt
+    │   └── http_5.txt
+    ├── README.md                 
+    └── test_sample.txt           
 
 ```
 # NIDS-AC-OpenMP
