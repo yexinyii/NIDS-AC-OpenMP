@@ -10,8 +10,7 @@ NIDS-AC-OpenMP/
 ├── third_party/
 │   └── Eigen/
 ├── src/
-│   ├── preprocess.h   
-│   ├── preprocess.cpp 
+│   ├── preprocess.cpp /h
 │   ├── ac_automaton.cpp/h
 │   ├── parallel_ac.cpp/h
 │   ├── system_core.cpp/h
