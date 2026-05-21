@@ -6,72 +6,61 @@
 #include <vector>
 #include <string>
 
+using namespace std;
+
 int main()
 {
-    std::string rulePath = "rules/rules.txt";
-    std::vector<std::string> rules;
+    string rulePath = "rules/rules.txt";
+    vector<string> rules;
 
     // 读取攻击规则库
     try
     {
         rules = FileIO::readLines(rulePath);
-
-        std::cout << "读取规则库成功，共 "
-                  << rules.size()
-                  << " 条规则" << std::endl;
+        cout << "读取规则库成功，共 " << rules.size() << " 条规则" << endl;
     }
     catch (const std::exception &e)
     {
-        std::cerr << "读取规则库失败: "
-                  << e.what()
-                  << std::endl;
+        cerr << "读取规则库失败: " << e.what() << endl;
         return 1;
     }
 
-    // todo:构建AC自动机
-    //build_ac_automaton(rules);
+    // 构建AC自动机
+    build_ac_automaton(rules);
 
     // HTTP测试文件列表
-    std::vector<std::string> filePaths = {
-        "dataset/http_extracted/http_1.txt",
-        "dataset/http_extracted/http_2.txt",
-        "dataset/http_extracted/http_3.txt",
-        "dataset/http_extracted/http_4.txt",
-        "dataset/http_extracted/http_5.txt"
-    };
+    vector<string> filePaths;
+    filePaths.push_back("dataset/http_extracted/http_1.txt");
+    filePaths.push_back("dataset/http_extracted/http_2.txt");
+    filePaths.push_back("dataset/http_extracted/http_3.txt");
+    filePaths.push_back("dataset/http_extracted/http_4.txt");
+    filePaths.push_back("dataset/http_extracted/http_5.txt");
 
-    for (const auto& filePath : filePaths)
+    for (int i = 0; i < filePaths.size(); i++)
     {
-        std::cout << std::endl;
-        std::cout << "正在处理：" << filePath << std::endl;
+        string filePath = filePaths[i];
+        cout << endl;
+        cout << "正在处理：" << filePath << endl;
 
         try
         {
-            // 读取HTTP文本内容
-            std::vector<std::string> dataLines =
-                FileIO::readLines(filePath);
+            vector<string> dataLines = FileIO::readLines(filePath);
 
-            std::string content;
-
-            for (const auto& line : dataLines)
+            string content = "";
+            for (int j = 0; j < dataLines.size(); j++)
             {
-                content += line + "\n";
+                content += dataLines[j] + "\n";
             }
 
-            // 预处理：统一转小写
-            std::string processed =
-                to_lowercase(content);
-
-            // todo:AC自动机匹配检测
-            //ac_automaton_match(processed);
+            // 预处理后匹配
+            ac_automaton_match(to_lowercase(content));
         }
         catch (const std::exception &e)
         {
-            std::cerr << "处理文件失败: "
-                      << e.what()
-                      << std::endl;
+            cerr << "处理文件失败: " << e.what() << endl;
         }
     }
 
+    // system("pause");
     return 0;
 }
