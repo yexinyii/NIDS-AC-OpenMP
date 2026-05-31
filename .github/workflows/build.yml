@@ -1,0 +1,103 @@
+name: Build
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-22.04, macos-14, windows-2022]
+
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # ── Dependencies: Linux ──────────────────────────────────────────
+      - name: Install dependencies (Linux)
+        if: runner.os == 'Linux'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            cmake \
+            g++ \
+            libomp-dev \
+            qtbase5-dev
+
+      # ── Dependencies: macOS ──────────────────────────────────────────
+      - name: Install dependencies (macOS)
+        if: runner.os == 'macOS'
+        run: |
+          brew install libomp qt@5
+
+      # ── Dependencies: Windows ────────────────────────────────────────
+      - name: Install Qt5 (Windows)
+        if: runner.os == 'Windows'
+        uses: jurplel/install-qt-action@v4
+        with:
+          version: '5.15.2'
+          host: 'windows'
+          target: 'desktop'
+          arch: 'win64_msvc2019_64'
+
+      # ── Eigen (all platforms) ────────────────────────────────────────
+      - name: Cache Eigen
+        id: cache-eigen
+        uses: actions/cache@v4
+        with:
+          path: third_party/Eigen
+          key: eigen-3.4.0-${{ matrix.os }}
+
+      - name: Download Eigen
+        if: steps.cache-eigen.outputs.cache-hit != 'true'
+        shell: bash
+        run: |
+          curl -fsSL -o eigen.tar.gz \
+            https://gitlab.com/libeigen/eigen/-/archive/3.4.0/eigen-3.4.0.tar.gz
+          mkdir -p third_party
+          tar -xzf eigen.tar.gz -C third_party/
+          mv third_party/eigen-3.4.0 third_party/Eigen
+
+      # ── CMake Configure ──────────────────────────────────────────────
+      - name: Configure CMake (Linux)
+        if: runner.os == 'Linux'
+        run: cmake -B build -DCMAKE_BUILD_TYPE=Release
+
+      - name: Configure CMake (macOS)
+        if: runner.os == 'macOS'
+        run: |
+          cmake -B build -DCMAKE_BUILD_TYPE=Release \
+            -DCMAKE_PREFIX_PATH="$(brew --prefix qt@5)" \
+            -DOpenMP_ROOT="$(brew --prefix libomp)"
+
+      - name: Configure CMake (Windows)
+        if: runner.os == 'Windows'
+        run: cmake -B build -DCMAKE_BUILD_TYPE=Release
+
+      # ── Build ────────────────────────────────────────────────────────
+      - name: Build
+        run: cmake --build build --config Release --parallel
+
+      # ── Verify ───────────────────────────────────────────────────────
+      - name: Verify binary
+        shell: bash
+        run: |
+          case "$RUNNER_OS" in
+            Windows) BINARY="build/Release/NIDS-AC-OpenMP.exe" ;;
+            *)       BINARY="build/NIDS-AC-OpenMP"             ;;
+          esac
+
+          if [ -f "$BINARY" ]; then
+            echo "✓ Build succeeded: $BINARY"
+            file "$BINARY" || true
+          else
+            echo "✗ Error: binary not found at $BINARY"
+            exit 1
+          fi
