@@ -74,7 +74,7 @@ jobs:
         if: runner.os == 'macOS'
         run: |
           cmake -B build -DCMAKE_BUILD_TYPE=Release \
-            -DCMAKE_PREFIX_PATH="$(brew --prefix qt@5)" \
+            -DCMAKE_PREFIX_PATH="$(brew --prefix qt@5);$(brew --prefix libomp)" \
             -DOpenMP_ROOT="$(brew --prefix libomp)"
 
       - name: Configure CMake (Windows)
