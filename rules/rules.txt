@@ -15,13 +15,15 @@ PATH|/etc/passwd
 
 CMD|cmd.exe
 CMD|/bin/sh
-CMD|powershell
+CMD|/bin/bash
+CMD|/bin/zsh
+CMD|powershell.exe
 
 SCAN|sqlmap
 SCAN|nikto
 SCAN|acunetix
 
-BOT|curl/
+BOT|curl
 BOT|python-requests
 BOT|wget
 
