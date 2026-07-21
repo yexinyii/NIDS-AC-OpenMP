@@ -3,8 +3,6 @@
 #include <stdexcept>
 #include <unordered_set>
 
-using namespace std;
-
 
 //  构造 — nodes[0] 即为根节点，根 fail 始终指向自身
 
@@ -34,11 +32,14 @@ int ACAutomaton::createNode()
     return static_cast<int>(nodes.size()) - 1;
 }
 
+void ACAutomaton::build_ac_automaton(std::string singleRule, std::string tag){
+    insert(singleRule, tag);
+}
 
 //  insert — 将攻击特征逐字符插入Trie，终点追加标签
 
 
-void ACAutomaton::insert(const string& pattern, const string& tag)
+void ACAutomaton::insert(const std::string& pattern, const std::string& tag)
 {
     if (pattern.empty()) return;  // 空模式串直接跳过，防止根节点误打标签
 
@@ -62,7 +63,7 @@ void ACAutomaton::build()
 {
     if (built_) return;           // 幂等保护
 
-    queue<int> q;
+    std::queue<int> q;
 
     // 初始化根节点子节点：不存在的直接指回根
     for (int i = 0; i < ASCII_SIZE; ++i) {
@@ -100,13 +101,13 @@ void ACAutomaton::build()
 //  query — 多模式匹配，返回去重标签集合（const只读，线程安全）
 
 
-unordered_set<string> ACAutomaton::query(const string& text) const
+std::unordered_set<std::string> ACAutomaton::query(const std::string& text) const
 {
     if (!built_) {
-        throw runtime_error("ACAutomaton::query() called before build()");
+        throw std::runtime_error("ACAutomaton::query() called before build()");
     }
 
-    unordered_set<string> results;
+    std::unordered_set<std::string> results;
     int cur = 0;   // 从根开始
 
     for (unsigned char c : text) {
@@ -120,7 +121,7 @@ unordered_set<string> ACAutomaton::query(const string& text) const
 
         // 沿 fail 链向上收集所有命中标签
         for (int temp = cur; temp != 0; temp = nodes[temp].fail) {
-            for (const string& tag : nodes[temp].tags) {
+            for (const std::string& tag : nodes[temp].tags) {
                 results.insert(tag);
             }
         }

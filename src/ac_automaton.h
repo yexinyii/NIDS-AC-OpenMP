@@ -17,6 +17,7 @@ public:
     // 移动语义 — 降低并行线程间复制开销
     ACAutomaton(ACAutomaton&& other) noexcept = default;
     ACAutomaton& operator=(ACAutomaton&& other) noexcept = default;
+    void build_ac_automaton(std::string singleRule, std::string tag);
 
     // 值拷贝 clone，供 OpenMP 线程生成独立只读副本
     ACAutomaton clone() const;
