@@ -28,7 +28,7 @@ int main()
     for(auto &i : rules){
         char tagTarget = '|';
         int tagTargetIndex = i.find(tagTarget);
-        std::string tag = i.substr(0, tagTargetIndex);
+        std::string tag = i.substr(0, tagTargetIndex-1);
         acAutoaton->build_ac_automaton(i, tag);
     }
     // HTTP测试文件列表
@@ -56,6 +56,7 @@ int main()
             }
 
             // 预处理后匹配
+            acAutoaton->build();
             std::unordered_set<std::string> ac_automaton_matched = acAutoaton->query(to_lowercase(content));
         }
         catch (const std::exception &e)
