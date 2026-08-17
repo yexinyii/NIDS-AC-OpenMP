@@ -39,9 +39,9 @@ int main()
     filePaths.push_back("dataset/http_extracted/http_4.txt");
     filePaths.push_back("dataset/http_extracted/http_5.txt");
 
-    for (int i = 0; i < filePaths.size(); i++)
+    for (auto it : filePaths)
     {
-        std::string filePath = filePaths[i];
+        std::string filePath = it;
         std::cout << std::endl;
         std::cout << "正在处理：" << filePath << std::endl;
 

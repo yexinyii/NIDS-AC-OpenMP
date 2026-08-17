@@ -1,0 +1,102 @@
+[
+  {
+    "rule": "union select",
+    "tag": "SQLI"
+  },
+  {
+    "rule": "or 1=1",
+    "tag": "SQLI"
+  },
+  {
+    "rule": "information_schema",
+    "tag": "SQLI"
+  },
+  {
+    "rule": "sleep(",
+    "tag": "SQLI"
+  },
+  {
+    "rule": "benchmark(",
+    "tag": "SQLI"
+  },
+  {
+    "rule": "<script>",
+    "tag": "XSS"
+  },
+  {
+    "rule": "javascript:",
+    "tag": "XSS"
+  },
+  {
+    "rule": "onerror=",
+    "tag": "XSS"
+  },
+  {
+    "rule": "alert(",
+    "tag": "XSS"
+  },
+  {
+    "rule": "../",
+    "tag": "PATH"
+  },
+  {
+    "rule": "..\\",
+    "tag": "PATH"
+  },
+  {
+    "rule": "/etc/passwd",
+    "tag": "PATH"
+  },
+  {
+    "rule": "cmd.exe",
+    "tag": "CMD"
+  },
+  {
+    "rule": "/bin/sh",
+    "tag": "CMD"
+  },
+  {
+    "rule": "/bin/bash",
+    "tag": "CMD"
+  },
+  {
+    "rule": "/bin/zsh",
+    "tag": "CMD"
+  },
+  {
+    "rule": "powershell.exe",
+    "tag": "CMD"
+  },
+  {
+    "rule": "sqlmap",
+    "tag": "SCAN"
+  },
+  {
+    "rule": "nikto",
+    "tag": "SCAN"
+  },
+  {
+    "rule": "acunetix",
+    "tag": "SCAN"
+  },
+  {
+    "rule": "curl",
+    "tag": "BOT"
+  },
+  {
+    "rule": "python-requests",
+    "tag": "BOT"
+  },
+  {
+    "rule": "wget",
+    "tag": "BOT"
+  },
+  {
+    "rule": "multipart/form-data",
+    "tag": "UPLOAD"
+  },
+  {
+    "rule": "filename=",
+    "tag": "UPLOAD"
+  }
+]

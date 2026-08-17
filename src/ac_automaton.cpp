@@ -44,7 +44,7 @@ void ACAutomaton::insert(const std::string& pattern, const std::string& tag)
     if (pattern.empty()) return;  // 空模式串直接跳过，防止根节点误打标签
 
     int cur = 0;   // 从根开始
-    for (unsigned char c : pattern) {
+    for (auto c : pattern) {
         if (c >= ASCII_SIZE) continue;           // 跳过非ASCII高字节
         if (nodes[cur].next[c] == INVALID) {
             nodes[cur].next[c] = createNode();   // 不可用引用——createNode()会使vector扩容失效引用
