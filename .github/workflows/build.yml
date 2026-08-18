@@ -28,6 +28,7 @@ jobs:
           sudo apt-get install -y \
             cmake \
             g++ \
+            libgl1-mesa-dev \
             qt6-base-dev
 
       # ── Dependencies: macOS ──────────────────────────────────────────
@@ -90,7 +91,8 @@ jobs:
         run: |
           case "$RUNNER_OS" in
             Windows) BINARY="build/Release/nids_qt.exe" ;;
-            *)       BINARY="build/nids_qt"             ;;
+            macOS)   BINARY="build/nids_qt.app/Contents/MacOS/nids_qt" ;;
+            *)       BINARY="build/nids_qt" ;;
           esac
 
           if [ -f "$BINARY" ]; then
@@ -100,3 +102,58 @@ jobs:
             echo "✗ Error: binary not found at $BINARY"
             exit 1
           fi
+
+      # ── Package: Linux ──────────────────────────────────────────────
+      - name: Package (Linux)
+        if: runner.os == 'Linux'
+        shell: bash
+        run: |
+          mkdir -p dist/nids_qt-linux/rules
+          cp build/nids_qt dist/nids_qt-linux/
+          cp rules/rules.json dist/nids_qt-linux/rules/
+          tar -C dist -czf dist/nids_qt-linux.tar.gz nids_qt-linux
+
+      # macdeployqt copies Qt frameworks and platform/image plugins into the app.
+      - name: Package with Qt dependencies (macOS)
+        if: runner.os == 'macOS'
+        shell: bash
+        run: |
+          mkdir -p build/nids_qt.app/Contents/Resources/rules dist
+          cp rules/rules.json build/nids_qt.app/Contents/Resources/rules/
+          "$(brew --prefix qt)/bin/macdeployqt" build/nids_qt.app -always-overwrite -verbose=1
+          APP_BINARY="build/nids_qt.app/Contents/MacOS/nids_qt"
+          LIBOMP_SOURCE="$(brew --prefix libomp)/lib/libomp.dylib"
+          LIBOMP_DEPENDENCY="$(otool -L "$APP_BINARY" | awk '/libomp\.dylib/{print $1; exit}')"
+          test -n "$LIBOMP_DEPENDENCY"
+          cp "$LIBOMP_SOURCE" build/nids_qt.app/Contents/Frameworks/libomp.dylib
+          install_name_tool -change "$LIBOMP_DEPENDENCY" \
+            "@executable_path/../Frameworks/libomp.dylib" "$APP_BINARY"
+          ditto -c -k --sequesterRsrc --keepParent build/nids_qt.app dist/nids_qt-macos.zip
+
+      # windeployqt copies Qt DLLs, plugins and the MSVC compiler runtime.
+      - name: Package with Qt dependencies (Windows)
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: |
+          $packageDir = "dist/nids_qt-windows"
+          New-Item -ItemType Directory -Force "$packageDir/rules" | Out-Null
+          Copy-Item "build/Release/nids_qt.exe" "$packageDir/nids_qt.exe"
+          Copy-Item "rules/rules.json" "$packageDir/rules/rules.json"
+          windeployqt --release --compiler-runtime --dir "$packageDir" "$packageDir/nids_qt.exe"
+          $vswhere = "${env:ProgramFiles(x86)}/Microsoft Visual Studio/Installer/vswhere.exe"
+          $vsPath = & $vswhere -latest -products * -property installationPath
+          $vcomp = Get-ChildItem "$vsPath/VC/Redist/MSVC" -Filter "vcomp140.dll" -Recurse |
+            Where-Object { $_.FullName -match "x64" } |
+            Select-Object -First 1
+          if (-not $vcomp) { throw "vcomp140.dll was not found in VCToolsRedistDir" }
+          Copy-Item $vcomp.FullName "$packageDir/vcomp140.dll"
+          Compress-Archive -Path "$packageDir/*" -DestinationPath "dist/nids_qt-windows.zip" -Force
+
+      - name: Upload package
+        uses: actions/upload-artifact@v4
+        with:
+          name: nids_qt-${{ matrix.os }}
+          path: |
+            dist/*.zip
+            dist/*.tar.gz
+          if-no-files-found: error

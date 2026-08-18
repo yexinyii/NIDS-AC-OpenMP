@@ -57,3 +57,9 @@ add_executable(nids_qt
     src/ui_qt/mainwindow.cpp
 )
 target_link_libraries(nids_qt PRIVATE core_lib Qt6::Core Qt6::Widgets)
+set_target_properties(nids_qt PROPERTIES
+    MACOSX_BUNDLE TRUE
+    WIN32_EXECUTABLE TRUE
+    MACOSX_BUNDLE_GUI_IDENTIFIER "io.github.nids-ac-openmp"
+    MACOSX_BUNDLE_BUNDLE_NAME "NIDS-AC-OpenMP"
+)
