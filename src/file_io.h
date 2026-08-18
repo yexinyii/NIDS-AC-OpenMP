@@ -1,9 +1,9 @@
 #include <string>
 #include <vector>
 #include <fstream>
-class FileIO {
+class FileIo {
 public:
-    FileIO() = default;
-    ~FileIO() = default;
-    static std::vector<std::string> readLines(const std::string& filePath);
+    FileIo() = default;
+    ~FileIo() = default;
+    static std::vector<std::string> read_lines(const std::string& filePath);
 };

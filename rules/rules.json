@@ -1,102 +1,127 @@
 [
   {
+    "option": "block",
     "rule": "union select",
     "tag": "SQLI"
   },
   {
+    "option": "block",
     "rule": "or 1=1",
     "tag": "SQLI"
   },
   {
+    "option": "block",
     "rule": "information_schema",
     "tag": "SQLI"
   },
   {
+    "option": "block",
     "rule": "sleep(",
     "tag": "SQLI"
   },
   {
+    "option": "block",
     "rule": "benchmark(",
     "tag": "SQLI"
   },
   {
+    "option": "block",
     "rule": "<script>",
     "tag": "XSS"
   },
   {
+    "option": "block",
     "rule": "javascript:",
     "tag": "XSS"
   },
   {
+    "option": "block",
     "rule": "onerror=",
     "tag": "XSS"
   },
   {
+    "option": "block",
     "rule": "alert(",
     "tag": "XSS"
   },
   {
+    "option": "block",
     "rule": "../",
     "tag": "PATH"
   },
   {
+    "option": "block",
     "rule": "..\\",
     "tag": "PATH"
   },
   {
+    "option": "block",
     "rule": "/etc/passwd",
     "tag": "PATH"
   },
   {
+    "option": "block",
     "rule": "cmd.exe",
     "tag": "CMD"
   },
   {
+    "option": "block",
     "rule": "/bin/sh",
     "tag": "CMD"
   },
   {
+    "option": "block",
     "rule": "/bin/bash",
     "tag": "CMD"
   },
   {
-    "rule": "/bin/zsh",
-    "tag": "CMD"
-  },
-  {
+    "option": "block",
     "rule": "powershell.exe",
     "tag": "CMD"
   },
   {
+    "option": "block",
     "rule": "sqlmap",
     "tag": "SCAN"
   },
   {
+    "option": "block",
     "rule": "nikto",
     "tag": "SCAN"
   },
   {
+    "option": "block",
     "rule": "acunetix",
     "tag": "SCAN"
   },
   {
+    "option": "block",
     "rule": "curl",
     "tag": "BOT"
   },
   {
+    "option": "block",
     "rule": "python-requests",
     "tag": "BOT"
   },
   {
+    "option": "block",
     "rule": "wget",
     "tag": "BOT"
   },
   {
+    "option": "block",
     "rule": "multipart/form-data",
     "tag": "UPLOAD"
   },
   {
+    "option": "block",
     "rule": "filename=",
     "tag": "UPLOAD"
+  },
+  {
+    "option": "block",
+    "rule": "/bin/zsh",
+    "tag": "CMD"
   }
 ]

@@ -5,22 +5,22 @@
 #include <vector>
 #include <unordered_set>
 
-class ACAutomaton {
+class AcAutomaton {
 public:
-    ACAutomaton();
-    ~ACAutomaton() = default;
+    AcAutomaton();
+    ~AcAutomaton() = default;
 
     // 拷贝语义 — vector<Node> 自动深拷贝，无需手动管理
-    ACAutomaton(const ACAutomaton& other) = default;
-    ACAutomaton& operator=(const ACAutomaton& other) = default;
+    AcAutomaton(const AcAutomaton& other) = default;
+    AcAutomaton& operator=(const AcAutomaton& other) = default;
 
     // 移动语义 — 降低并行线程间复制开销
-    ACAutomaton(ACAutomaton&& other) noexcept = default;
-    ACAutomaton& operator=(ACAutomaton&& other) noexcept = default;
+    AcAutomaton(AcAutomaton&& other) noexcept = default;
+    AcAutomaton& operator=(AcAutomaton&& other) noexcept = default;
     void build_ac_automaton(std::string singleRule, std::string tag);
 
     // 值拷贝 clone，供 OpenMP 线程生成独立只读副本
-    ACAutomaton clone() const;
+    AcAutomaton clone() const;
 
     // 插入单条攻击特征（同一终点可绑定多条标签）
     void insert(const std::string& pattern, const std::string& tag);
@@ -32,7 +32,7 @@ public:
     std::unordered_set<std::string> query(const std::string& text) const;
 
     // 是否已完成 fail 构建
-    bool is_built() const { return built_; }
+    bool is_built() const { return built; }
 
     // 清空重置自动机，支持重新加载规则
     void clear();
@@ -47,16 +47,15 @@ private:
         int  fail;                         // 失配指针下标
         std::vector<std::string> tags;     // 命中该终点时触发的攻击标签
 
-        Node() : fail(INVALID)
-        {
+        Node() : fail(INVALID) {
             for (int i = 0; i < ASCII_SIZE; ++i) next[i] = INVALID;
         }
     };
 
     std::vector<Node> nodes;   // nodes[0] 固定为根节点
-    bool built_ = false;
+    bool built = false;
 
-    int createNode();           // 追加节点并返回下标
+    int create_node();           // 追加节点并返回下标
 };
 
 #endif

@@ -7,9 +7,8 @@
 //  构造 — nodes[0] 即为根节点，根 fail 始终指向自身
 
 
-ACAutomaton::ACAutomaton()
-{
-    createNode();   // 预置根节点于下标 0
+AcAutomaton::AcAutomaton() {
+    create_node();   // 预置根节点于下标 0
     nodes[0].fail = 0;
 }
 
@@ -17,51 +16,48 @@ ACAutomaton::ACAutomaton()
 //  clone — 值返回，依赖默认拷贝构造
 // （vector<Node> 自动深拷贝）
 
-ACAutomaton ACAutomaton::clone() const
+AcAutomaton AcAutomaton::clone() const
 {
-    return ACAutomaton(*this);
+    return AcAutomaton(*this);
 }
 
  
-//  createNode — 追加节点至连续内存，返回下标
+//  create_node — 追加节点至连续内存，返回下标
 
 
-int ACAutomaton::createNode()
-{
+int AcAutomaton::create_node() {
     nodes.emplace_back();
     return static_cast<int>(nodes.size()) - 1;
 }
 
-void ACAutomaton::build_ac_automaton(std::string singleRule, std::string tag){
+void AcAutomaton::build_ac_automaton(std::string singleRule, std::string tag) {
     insert(singleRule, tag);
 }
 
 //  insert — 将攻击特征逐字符插入Trie，终点追加标签
 
 
-void ACAutomaton::insert(const std::string& pattern, const std::string& tag)
-{
+void AcAutomaton::insert(const std::string& pattern, const std::string& tag) {
     if (pattern.empty()) return;  // 空模式串直接跳过，防止根节点误打标签
 
     int cur = 0;   // 从根开始
-    for (auto c : pattern) {
+    for (unsigned char c : pattern) {
         if (c >= ASCII_SIZE) continue;           // 跳过非ASCII高字节
         if (nodes[cur].next[c] == INVALID) {
-            nodes[cur].next[c] = createNode();   // 不可用引用——createNode()会使vector扩容失效引用
+            nodes[cur].next[c] = create_node();   // 不可用引用——create_node()会使vector扩容失效引用
         }
         cur = nodes[cur].next[c];
     }
     nodes[cur].tags.push_back(tag);              // 终点追加标签
-    built_ = false;                              // 插入新规则后标记为未构建
+    built = false;                              // 插入新规则后标记为未构建
 }
 
 
 //  build — BFS构建失配指针 + 路径压缩（查询一步跳转，无循环回退）
 
 
-void ACAutomaton::build()
-{
-    if (built_) return;           // 幂等保护
+void AcAutomaton::build() {
+    if (built) return;           // 幂等保护
 
     std::queue<int> q;
 
@@ -94,17 +90,17 @@ void ACAutomaton::build()
         }
     }
 
-    built_ = true;
+    built = true;
 }
 
 
 //  query — 多模式匹配，返回去重标签集合（const只读，线程安全）
 
 
-std::unordered_set<std::string> ACAutomaton::query(const std::string& text) const
+std::unordered_set<std::string> AcAutomaton::query(const std::string& text) const
 {
-    if (!built_) {
-        throw std::runtime_error("ACAutomaton::query() called before build()");
+    if (!built) {
+        throw std::runtime_error("AcAutomaton::query() called before build()");
     }
 
     std::unordered_set<std::string> results;
@@ -133,10 +129,9 @@ std::unordered_set<std::string> ACAutomaton::query(const std::string& text) cons
 //  clear — 清空所有节点与状态，支持重新加载规则
 
 
-void ACAutomaton::clear()
-{
+void AcAutomaton::clear() {
     nodes.clear();
     nodes.emplace_back();   // 重建根节点 nodes[0]
     nodes[0].fail = 0;
-    built_ = false;
+    built = false;
 }

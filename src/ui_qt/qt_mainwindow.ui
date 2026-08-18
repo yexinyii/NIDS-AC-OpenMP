@@ -487,24 +487,68 @@ QPushButton[action=&quot;true&quot;]:hover { background: #2b9569; }</string>
        <item>
         <widget class="QTableWidget" name="rulesTable">
          <property name="columnCount">
-          <number>3</number>
+          <number>4</number>
          </property>
          <column>
           <property name="text">
-           <string>规则名称</string>
+           <string>删除</string>
           </property>
          </column>
          <column>
           <property name="text">
-           <string>模式</string>
+           <string>规则</string>
           </property>
          </column>
          <column>
           <property name="text">
-           <string>状态</string>
+           <string>标签</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>操作</string>
           </property>
          </column>
         </widget>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="addRuleLayout">
+         <item>
+          <spacer name="addRuleSpacer">
+           <property name="orientation">
+            <enum>Qt::Orientation::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <widget class="QPushButton" name="addRuleButton">
+           <property name="minimumSize">
+            <size>
+             <width>56</width>
+             <height>56</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>56</width>
+             <height>56</height>
+            </size>
+           </property>
+           <property name="text">
+            <string>+</string>
+           </property>
+           <property name="fab" stdset="0">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+        </layout>
        </item>
       </layout>
      </widget>

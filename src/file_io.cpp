@@ -1,5 +1,5 @@
 #include "file_io.h"
-std::vector<std::string> FileIO::readLines(const std::string& filePath) {
+std::vector<std::string> FileIo::read_lines(const std::string& filePath) {
     std::vector<std::string> lines;
     std::ifstream file(filePath);
     if (!file.is_open()) {

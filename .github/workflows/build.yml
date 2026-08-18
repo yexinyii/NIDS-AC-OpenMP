@@ -28,24 +28,23 @@ jobs:
           sudo apt-get install -y \
             cmake \
             g++ \
-            libomp-dev \
-            qtbase5-dev
+            qt6-base-dev
 
       # ── Dependencies: macOS ──────────────────────────────────────────
       - name: Install dependencies (macOS)
         if: runner.os == 'macOS'
         run: |
-          brew install libomp qt@5
+          brew install libomp qt
 
       # ── Dependencies: Windows ────────────────────────────────────────
-      - name: Install Qt5 (Windows)
+      - name: Install Qt6 (Windows)
         if: runner.os == 'Windows'
         uses: jurplel/install-qt-action@v4
         with:
-          version: '5.15.2'
+          version: '6.8.3'
           host: 'windows'
           target: 'desktop'
-          arch: 'win64_msvc2019_64'
+          arch: 'win64_msvc2022_64'
 
       # ── Eigen (all platforms) ────────────────────────────────────────
       - name: Cache Eigen
@@ -74,7 +73,7 @@ jobs:
         if: runner.os == 'macOS'
         run: |
           cmake -B build -DCMAKE_BUILD_TYPE=Release \
-            -DCMAKE_PREFIX_PATH="$(brew --prefix qt@5);$(brew --prefix libomp)" \
+            -DCMAKE_PREFIX_PATH="$(brew --prefix qt);$(brew --prefix libomp)" \
             -DOpenMP_ROOT="$(brew --prefix libomp)"
 
       - name: Configure CMake (Windows)
@@ -90,8 +89,8 @@ jobs:
         shell: bash
         run: |
           case "$RUNNER_OS" in
-            Windows) BINARY="build/Release/NIDS-AC-OpenMP.exe" ;;
-            *)       BINARY="build/NIDS-AC-OpenMP"             ;;
+            Windows) BINARY="build/Release/nids_qt.exe" ;;
+            *)       BINARY="build/nids_qt"             ;;
           esac
 
           if [ -f "$BINARY" ]; then

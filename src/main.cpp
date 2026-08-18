@@ -6,30 +6,26 @@
 #include <vector>
 #include <string>
 
-int main()
-{
+int main() {
     std::string rulePath = "rules/rules.txt";
     std::vector<std::string> rules;
-    ACAutomaton* acAutoaton = new ACAutomaton;
+    AcAutomaton acAutomaton;
 
     // 读取攻击规则库
-    try
-    {
-        rules = FileIO::readLines(rulePath);
+    try {
+        rules = FileIo::read_lines(rulePath);
         std::cout << "读取规则库成功，共 " << rules.size() << " 条规则" << std::endl;
-    }
-    catch (const std::exception &e)
-    {
+    } catch (const std::exception& e) {
         std::cerr << "读取规则库失败: " << e.what() << std::endl;
         return 1;
     }
     
     // 构建AC自动机
-    for(auto &i : rules){
+    for (auto& rule : rules) {
         char tagTarget = '|';
-        int tagTargetIndex = i.find(tagTarget);
-        std::string tag = i.substr(0, tagTargetIndex-1);
-        acAutoaton->build_ac_automaton(i, tag);
+        int tagTargetIndex = rule.find(tagTarget);
+        std::string tag = rule.substr(0, tagTargetIndex - 1);
+        acAutomaton.build_ac_automaton(rule, tag);
     }
     // HTTP测试文件列表
     std::vector<std::string> filePaths;
@@ -39,28 +35,22 @@ int main()
     filePaths.push_back("dataset/http_extracted/http_4.txt");
     filePaths.push_back("dataset/http_extracted/http_5.txt");
 
-    for (auto it : filePaths)
-    {
-        std::string filePath = it;
+    for (const auto& filePath : filePaths) {
         std::cout << std::endl;
         std::cout << "正在处理：" << filePath << std::endl;
 
-        try
-        {
-            std::vector<std::string> dataLines = FileIO::readLines(filePath);
+        try {
+            std::vector<std::string> dataLines = FileIo::read_lines(filePath);
 
             std::string content = "";
-            for (int j = 0; j < dataLines.size(); j++)
-            {
+            for (std::size_t j = 0; j < dataLines.size(); ++j) {
                 content += dataLines[j] + "\n";
             }
 
             // 预处理后匹配
-            acAutoaton->build();
-            std::unordered_set<std::string> ac_automaton_matched = acAutoaton->query(to_lowercase(content));
-        }
-        catch (const std::exception &e)
-        {
+            acAutomaton.build();
+            std::unordered_set<std::string> acAutomatonMatched = acAutomaton.query(to_lowercase(content));
+        } catch (const std::exception& e) {
             std::cerr << "处理文件失败: " << e.what() << std::endl;
         }
     }
